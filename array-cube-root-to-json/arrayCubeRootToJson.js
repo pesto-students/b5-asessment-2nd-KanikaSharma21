@@ -1,19 +1,13 @@
 const arrayCubeRootToJson = (arr) => {
-  let cubeRootArray = [];
   let cubeObj = {};
-  arr.forEach((element) => {
-    cubeObj = {};
-    let value = Math.cbrt(element);
-    let elem = element.toString();
-    cubeObj = { elem: elem, value: value };
-    cubeRootArray.push(cubeObj);
+  cubeRootArray = arr.map((element) => {
+    cubeObj[element] = Math.cbrt(element);
   });
 
-  cubeObj = Object.assign(...cubeRootArray.map((key) => Object.values(key)).map((value) => ({ [value[0]]: value[1] })));
   return cubeObj;
 };
 try {
-  let arr = [27, 64, Infinity];
+  let arr = [27, 64, 1.24, Infinity];
 
   let isValidInput = validation(arr);
   if (isValidInput) {
@@ -34,11 +28,9 @@ function validation(arr) {
     return isValidInput;
   }
   for (let index = 0; index < arr.length; ++index) {
-    if (arr[index] != Infinity) {
-      if (Number.isInteger(arr[index]) == false) {
-        isValidInput = false;
-        break;
-      }
+    if (isNaN(arr[index])) {
+      isValidInput = false;
+      break;
     }
   }
   return isValidInput;
